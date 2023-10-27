@@ -16,18 +16,10 @@ app.use(cors());
 
 app.post('/register', authValidator, handleValidationError, register);
 app.post('/login', authValidator, handleValidationError, login);
-app.post('/me', isAuthenticated, getUser);
-// app.post('/login');
-// app.get('/users');
+app.get('/me', isAuthenticated, getUser);
+
 
 const PORT = process.env.PORT || 8888;
-
-// app.listen(PORT, (error) => {
-//   if (error) {
-//     return console.log("Server can not run!", error.message);
-//   }
-//   console.log(`Server is running on port: ${PORT}`);
-// })
 
 (async function start() {
   try {
