@@ -1,25 +1,18 @@
-import express, {json} from "express";
+import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import {getUser, login, register} from "./controllers/UserController.js";
-import {authValidator} from "./services/validators.js";
-import handleValidationError from "./middlewares/handleValidationError.js";
-import isAuthenticated from "./middlewares/isAuthenticated.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
+const PORT = process.env.PORT || 8888;
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-app.post('/register', authValidator, handleValidationError, register);
-app.post('/login', authValidator, handleValidationError, login);
-app.get('/me', isAuthenticated, getUser);
-
-
-const PORT = process.env.PORT || 8888;
+app.use('/api', authRoutes);
 
 (async function start() {
   try {
