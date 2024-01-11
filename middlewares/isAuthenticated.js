@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import {header} from "express-validator";
 
 export default (req, res, next) => {
   const jwtToken = (req.headers.authorization || '').replace(/Bearer\s?/, "");
@@ -7,8 +6,8 @@ export default (req, res, next) => {
   if (jwtToken) {
     try {
       const decodedData = jwt.verify(jwtToken, "secretKeyForUser");
-
       req.userId = decodedData._id;
+      req.organizationId = decodedData._organization_id || '';
       next();
 
     } catch (error) {
